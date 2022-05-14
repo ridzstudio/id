@@ -4,7 +4,55 @@
 
 // Fonts
 
-@import url('https://fonts.googleapis.com/css?family=Heebo:400,700&display=swap');
+@font-face {
+  font-family: "Ridz Studio";
+  src: url('./fonts/RidzStudio/RidzStudio-Regular.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-style: italic;
+  src: url('./fonts/RidzStudio/RidzStudio-Italic.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-weight: 100;
+  src: url('./fonts/RidzStudio/RidzStudio-Thin.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-weight: 100;
+  font-style: italic;
+  src: url('./fonts/RidzStudio/RidzStudio-Thin\ Italic.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-weight: 300;
+  src: url('./fonts/RidzStudio/RidzStudio-Light.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-weight: 300;
+  font-style: italic;
+  src: url('./fonts/RidzStudio/RidzStudio-Light\ Italic.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-weight: bold;
+  src: url('./fonts/RidzStudio/RidzStudio-Bold.otf');
+}
+
+@font-face {
+  font-family: "Ridz Studio";
+  font-weight: bold;
+  font-style: italic;
+  src: url('./fonts/RidzStudio/RidzStudio-Bold\ Italic.otf');
+}
 
 // Widgets
 

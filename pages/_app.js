@@ -1,9 +1,11 @@
 import configureStore from '../config/configureStore';
 import { Provider } from 'react-redux';
 import { Suspense, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
 import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiTheme from '../theme';
 import ScrollToTop from '../utils/ScrollToTop';
 import '../assets/base.scss';
@@ -44,6 +46,14 @@ function App({ Component, pageProps }) {
     ease: 'linear',
     duration: 0.3
   };
+
+  useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
 
   const SuspenseLoading = () => {
     const [show, setShow] = useState(false);
@@ -95,6 +105,7 @@ function App({ Component, pageProps }) {
                   exit="out"
                   variants={pageVariants}
                   transition={pageTransition}>
+                  <CssBaseline />
                   <Component {...pageProps} />
                 </motion.div>
               </MinimalLayout>
@@ -107,3 +118,8 @@ function App({ Component, pageProps }) {
 }
 
 export default App;
+
+App.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
+};

@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -29,8 +30,9 @@ import NotificationsActiveTwoToneIcon from '@material-ui/icons/NotificationsActi
 import PollTwoToneIcon from '@material-ui/icons/PollTwoTone';
 import PeopleAltTwoToneIcon from '@material-ui/icons/PeopleAltTwoTone';
 
-import Chart from 'react-apexcharts';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

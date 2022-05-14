@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 
 import clsx from 'clsx';
@@ -28,8 +29,9 @@ import {
   buildStyles
 } from 'react-circular-progressbar';
 import CountUp from 'react-countup';
-import Chart from 'react-apexcharts';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const HeaderDrawer = (props) => {
   const chartHeaderDrawerOptions = {

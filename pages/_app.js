@@ -1,12 +1,12 @@
-import configureStore from './config/configureStore';
+import configureStore from '../config/configureStore';
 import { Provider } from 'react-redux';
 import { Suspense, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
 import { ThemeProvider } from '@material-ui/styles';
-import MuiTheme from './theme';
-import ScrollToTop from './utils/ScrollToTop';
-import './assets/base.scss';
+import MuiTheme from '../theme';
+import ScrollToTop from '../utils/ScrollToTop';
+import '../assets/base.scss';
 
 // Icons
 
@@ -20,7 +20,7 @@ library.add(fas, faExclamation, faAngleDoubleRight, faAngleDoubleLeft, faCheck, 
 
 // Layout Blueprints
 
-import { MinimalLayout } from './layout-blueprints';
+import { MinimalLayout } from '../layout-blueprints';
 
 // Constants
 

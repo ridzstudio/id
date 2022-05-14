@@ -276,8 +276,6 @@ import {
 } from './layout-blueprints';
 
 function App({ Component, pageProps }) {
-  const location = useLocation();
-
   const pageVariants = {
     initial: {
       opacity: 0

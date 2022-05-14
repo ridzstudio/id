@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import configureStore from './config/configureStore';
 import { Provider } from 'react-redux';
-import Routes from './Routes';
 import ScrollToTop from './utils/ScrollToTop';
 import './assets/base.scss';
 
@@ -257,8 +254,7 @@ library.add(
 );
 const store = configureStore();
 
-import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import React, { Suspense, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
 
@@ -268,12 +264,7 @@ import MuiTheme from './theme';
 
 // Layout Blueprints
 
-import {
-  LeftSidebar,
-  CollapsedSidebar,
-  MinimalLayout,
-  PresentationLayout
-} from './layout-blueprints';
+import { MinimalLayout } from './layout-blueprints';
 
 function App({ Component, pageProps }) {
   const pageVariants = {

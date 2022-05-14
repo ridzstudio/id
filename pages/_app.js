@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Suspense, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
-import { ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import MuiTheme from '../theme';
 import ScrollToTop from '../utils/ScrollToTop';
 import '../assets/base.scss';

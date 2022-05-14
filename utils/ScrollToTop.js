@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { withRouter } from 'next/router';
 
-const ScrollToTop = ({ children, location: { pathname } }) => {
+const ScrollToTop = ({ children, router: { pathname } }) => {
   useEffect(() => {
     window.scrollTo({
       top: 0,

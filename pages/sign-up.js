@@ -6,11 +6,33 @@ import { useState } from 'react';
 import { Grid, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
 
 export default function SignUp() {
-  const [checked1, setChecked1] = useState(true);
+  const [data, setData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  })
 
-  const handleChange1 = (event) => {
-    setChecked1(event.target.checked);
+  const [config, setConfig] = useState({
+    showPassword: false,
+    confirmPassword: ''
+  })
+
+  const handleData = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
   };
+
+  const handleConfig = (event) => {
+    if (event.target.name === "showPassword") {
+      setConfig({ ...config, showPassword: event.target.checked })
+    } else {
+      setConfig({ ...config, [event.target.name]: event.target.value });
+    }
+  }
+
+  const handleSubmit = (event) => {
+    // event.preventDefault()
+  }
 
   return (
     <>
@@ -41,71 +63,89 @@ export default function SignUp() {
                           One account. All of Ridz Studio working for you.
                         </p>
                       </div>
-                      <Grid container spacing={6} className="mb-0">
-                        <Grid item md={6}>
-                          <TextField
-                            label="First name"
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item md={6}>
-                          <TextField
-                            label="Last name"
-                            fullWidth
-                          />
-                        </Grid>
-                      </Grid>
-                      <div className="mb-3">
-                        <TextField
-                          label="Email address"
-                          fullWidth
-                          type="email"
-                        />
-                      </div>
-                      <Grid container spacing={6} className="mb-2">
-                        <Grid item md={6}>
-                          <TextField
-                            label="Password"
-                            type="password"
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item md={6}>
-                          <TextField
-                            label="Confirm"
-                            type="password"
-                            fullWidth
-                          />
-                        </Grid>
-                      </Grid>
-                      <div className="d-flex justify-content-between align-items-center font-size-md mb-5">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={checked1}
-                              onChange={handleChange1}
-                              value="checked1"
-                              color="primary"
+                      <form onSubmit={handleSubmit}>
+                        <Grid container spacing={6} className="mb-0">
+                          <Grid item md={6}>
+                            <TextField
+                              label="First name"
+                              fullWidth
+                              value={data.firstName}
+                              name="firstName"
+                              onChange={handleData}
                             />
-                          }
-                          label="Show password"
-                        />
-                        <div>
-                          <Link
-                            href="/sign-in"
-                            className="text-first">
-                            <a>Sign in instead</a>
-                          </Link>
+                          </Grid>
+                          <Grid item md={6}>
+                            <TextField
+                              label="Last name"
+                              fullWidth
+                              value={data.lastName}
+                              name="lastName"
+                              onChange={handleData}
+                            />
+                          </Grid>
+                        </Grid>
+                        <div className="mb-3">
+                          <TextField
+                            label="Email address"
+                            fullWidth
+                            type="email"
+                            value={data.email}
+                            name="email"
+                            onChange={handleData}
+                          />
                         </div>
-                      </div>
-                      <div className="text-center">
-                        <small className="text-black-50">By clicking the <strong>Create account</strong> button
-                          below you agree to our terms of service and privacy
-                          statement.</small>
-                        <Button className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
-                          Create account
-                        </Button>
-                      </div>
+                        <Grid container spacing={6} className="mb-2">
+                          <Grid item md={6}>
+                            <TextField
+                              label="Password"
+                              type={config.showPassword ? "text" : "password"}
+                              value={data.password}
+                              name="password"
+                              onChange={handleData}
+                              fullWidth
+                            />
+                          </Grid>
+                          <Grid item md={6}>
+                            <TextField
+                              label="Confirm"
+                              type={config.showPassword ? "text" : "password"}
+                              fullWidth
+                              value={config.confirmPassword}
+                              name="confirmPassword"
+                              onChange={handleConfig}
+                            />
+                          </Grid>
+                        </Grid>
+                        <div className="d-flex justify-content-between align-items-center font-size-md mb-5">
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={config.showPassword}
+                                name="showPassword"
+                                onChange={handleConfig}
+                                value="checked1"
+                                color="primary"
+                              />
+                            }
+                            label="Show password"
+                          />
+                          <div>
+                            <Link
+                              href="/sign-in"
+                              className="text-first">
+                              <a>Sign in instead</a>
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <small className="text-black-50">By clicking the <strong>Create account</strong> button
+                            below you agree to our terms of service and privacy
+                            statement.</small>
+                          <Button type="submit" className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
+                            Create account
+                          </Button>
+                        </div>
+                      </form>
                     </Grid>
                   </div>
                 </div>

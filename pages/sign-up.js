@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import validEmail from '@secretsofsume/valid-email';
 
-import { Grid, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, Button, TextField, FormControlLabel, Checkbox, CircularProgress } from '@material-ui/core';
 
 export default function SignUp() {
   const [data, setData] = useState({
@@ -15,6 +16,19 @@ export default function SignUp() {
 
   const [config, setConfig] = useState({
     showPassword: false,
+    confirmPassword: ''
+  })
+
+  const [formConfig, setFormConfig] = useState({
+    error: true,
+    loading: false
+  })
+
+  const [error, setError] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
     confirmPassword: ''
   })
 
@@ -30,8 +44,46 @@ export default function SignUp() {
     }
   }
 
+  const handleValidation = (event) => {
+    setError({ ...error, [event.target.name]: '' })
+    if (event.target.name === "firstName" && !event.target.value) {
+      setError({ ...error, [event.target.name]: 'First name is required' })
+    } else if (event.target.name === "lastName" && !event.target.value) {
+      setError({ ...error, [event.target.name]: 'Last name is required' })
+    } else if (event.target.name === "email") {
+      if (!event.target.value) {
+        setError({ ...error, [event.target.name]: 'Email address is required' })
+      } else if (!validEmail(event.target.value)) {
+        setError({ ...error, [event.target.name]: 'Email address is invalid' })
+      }
+    } else if (event.target.name === "password") {
+      if (!event.target.value) {
+        setError({ ...error, [event.target.name]: 'Password is required' })
+      } else if (event.target.value.length < 6) {
+        setError({ ...error, [event.target.name]: 'Password minimum length should be 6 character' })
+      }
+    } else if (event.target.name === "confirmPassword") {
+      if (!event.target.value) {
+        setError({ ...error, [event.target.name]: 'Password confirmation is required' })
+      } else if (event.target.value !== data.password) {
+        setError({ ...error, [event.target.name]: 'Password is not matching' })
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    if (data.firstName && data.lastName && data.email && validEmail(data.email) && data.password && data.password.length >= 6 && config.confirmPassword && config.confirmPassword == data.password) {
+      setFormConfig({ ...formConfig, error: false })
+    } else {
+      setFormConfig({ ...formConfig, error: true })
+    }
+  }, [data, config])
+
+
   const handleSubmit = (event) => {
-    // event.preventDefault()
+    event.preventDefault()
+    setFormConfig({ ...formConfig, loading: true })
   }
 
   return (
@@ -72,6 +124,9 @@ export default function SignUp() {
                               value={data.firstName}
                               name="firstName"
                               onChange={handleData}
+                              onBlur={handleValidation}
+                              error={Boolean(error.firstName)}
+                              helperText={error.firstName}
                             />
                           </Grid>
                           <Grid item md={6}>
@@ -81,6 +136,9 @@ export default function SignUp() {
                               value={data.lastName}
                               name="lastName"
                               onChange={handleData}
+                              onBlur={handleValidation}
+                              error={Boolean(error.lastName)}
+                              helperText={error.lastName}
                             />
                           </Grid>
                         </Grid>
@@ -92,6 +150,9 @@ export default function SignUp() {
                             value={data.email}
                             name="email"
                             onChange={handleData}
+                            onBlur={handleValidation}
+                            error={Boolean(error.email)}
+                            helperText={error.email}
                           />
                         </div>
                         <Grid container spacing={6} className="mb-2">
@@ -102,7 +163,10 @@ export default function SignUp() {
                               value={data.password}
                               name="password"
                               onChange={handleData}
+                              onBlur={handleValidation}
                               fullWidth
+                              error={Boolean(error.password)}
+                              helperText={error.password}
                             />
                           </Grid>
                           <Grid item md={6}>
@@ -113,6 +177,9 @@ export default function SignUp() {
                               value={config.confirmPassword}
                               name="confirmPassword"
                               onChange={handleConfig}
+                              error={Boolean(error.confirmPassword)}
+                              onBlur={handleValidation}
+                              helperText={error.confirmPassword}
                             />
                           </Grid>
                         </Grid>
@@ -123,7 +190,6 @@ export default function SignUp() {
                                 checked={config.showPassword}
                                 name="showPassword"
                                 onChange={handleConfig}
-                                value="checked1"
                                 color="primary"
                               />
                             }
@@ -138,12 +204,19 @@ export default function SignUp() {
                           </div>
                         </div>
                         <div className="text-center">
-                          <small className="text-black-50">By clicking the <strong>Create account</strong> button
-                            below you agree to our terms of service and privacy
-                            statement.</small>
-                          <Button type="submit" className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
-                            Create account
-                          </Button>
+                          <small className="text-black-50">By clicking the <strong>Create account</strong> button below you agree to our terms of service and privacy statement.</small>
+                          <div style={{ position: 'relative' }}>
+                            <Button type="submit" disabled={formConfig.error ? formConfig.error : formConfig.loading} className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
+                              {formConfig.loading ? "Creating account ..." : "Create account"}
+                            </Button>
+                            {formConfig.loading && <CircularProgress size={20} style={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              marginTop: -12,
+                              marginLeft: -12
+                            }} />}
+                          </div>
                         </div>
                       </form>
                     </Grid>

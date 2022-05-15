@@ -31,8 +31,7 @@ export default function SignUp() {
                           Create your Ridz Studio ID
                         </h1>
                         <p className="font-size-lg mb-0 text-black-50">
-                          One Ridz Studio ID is all you need to access all Ridz Studio services. <br/>
-                          Already have an Ridz Studio ID? <Link href="/sign-in"><a>Find it here</a></Link>
+                          One account. All of Ridz Studio working for you.
                         </p>
                       </div>
                       <div className="mb-3">

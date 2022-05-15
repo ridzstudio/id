@@ -1,10 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from 'react';
 
-import { Grid, Button, TextField } from '@material-ui/core';
+import { Grid, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
 
 export default function SignUp() {
+  const [checked1, setChecked1] = useState(true);
+
+  const handleChange1 = (event) => {
+    setChecked1(event.target.checked);
+  };
+
   return (
     <>
       <Head>
@@ -34,66 +41,67 @@ export default function SignUp() {
                           One account. All of Ridz Studio working for you.
                         </p>
                       </div>
+                      <Grid container spacing={6} className="mb-0">
+                        <Grid item md={6}>
+                          <TextField
+                            label="First name"
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item md={6}>
+                          <TextField
+                            label="Last name"
+                            fullWidth
+                          />
+                        </Grid>
+                      </Grid>
                       <div className="mb-3">
-                        <label className="font-weight-bold mb-2">
-                          Email address
-                        </label>
                         <TextField
-                          variant="outlined"
-                          size="small"
+                          label="Email address"
                           fullWidth
-                          placeholder="Enter your email address"
                           type="email"
                         />
                       </div>
-                      <div className="mb-3">
-                        <div className="d-flex justify-content-between">
-                          <label className="font-weight-bold mb-2">
-                            Password
-                          </label>
-                        </div>
-                        <TextField
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          placeholder="Enter your password"
-                          type="password"
-                        />
-                      </div>
-                      <Grid container spacing={6}>
+                      <Grid container spacing={6} className="mb-2">
                         <Grid item md={6}>
-                          <div>
-                            <label className="font-weight-bold mb-2">
-                              First name
-                            </label>
-                            <TextField
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              placeholder="Enter your first name"
-                            />
-                          </div>
+                          <TextField
+                            label="Password"
+                            type="password"
+                            fullWidth
+                          />
                         </Grid>
                         <Grid item md={6}>
-                          <div>
-                            <label className="font-weight-bold mb-2">
-                              Last name
-                            </label>
-                            <TextField
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              placeholder="Enter your last name"
-                            />
-                          </div>
+                          <TextField
+                            label="Confirm"
+                            type="password"
+                            fullWidth
+                          />
                         </Grid>
                       </Grid>
-                      <div className="my-4">
-                        By clicking the <strong>Create account</strong> button
-                        below you agree to our terms of service and privacy
-                        statement.
+                      <div className="d-flex justify-content-between align-items-center font-size-md mb-5">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={checked1}
+                              onChange={handleChange1}
+                              value="checked1"
+                              color="primary"
+                            />
+                          }
+                          label="Show password"
+                        />
+                        <div>
+                          <Link
+                            href="/sign-in"
+                            className="text-first">
+                            <a>Sign in instead</a>
+                          </Link>
+                        </div>
                       </div>
-                      <div className="text-center mb-4">
+                      <div className="text-center">
+                        <small className="text-black-50">By clicking the <strong>Create account</strong> button
+                          below you agree to our terms of service and privacy
+                          statement.</small>
                         <Button className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
                           Create account
                         </Button>

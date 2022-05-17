@@ -27,6 +27,8 @@ import { MinimalLayout } from '../layout-blueprints';
 
 const store = configureStore();
 
+axios.defaults.baseURL = process.env.APIBASE;
+
 function App({ Component, pageProps }) {
   const pageVariants = {
     initial: {

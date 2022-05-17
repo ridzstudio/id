@@ -1,0 +1,28 @@
+import excuteQuery from '../../../lib/db'
+import * as encryption from 'object-encrypt-decrypt'
+
+const create = async (req, res) => {
+  if (req.method === 'POST') {
+    try {
+      const data = encryption.decrypt(req.body.data)
+      console.log(data)
+      const result = await excuteQuery({
+        query: 'INSERT INTO accounts (firstname, lastname, email, password, status) VALUES ((?), (?), (?), (?), 1)',
+        values: [data.firstname, data.lastname, data.email, data.password],
+      })
+
+      if(result.insertId) {
+        res.status(201).end()
+      } else {
+        res.status(417).end()
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).end()
+    }
+  } else {
+    res.status(405).end()
+  }
+}
+
+export default create

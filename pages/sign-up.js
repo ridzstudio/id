@@ -84,6 +84,15 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault()
     setFormConfig({ ...formConfig, loading: true })
+    axios.post('/account/create', {
+      data: encryption.encrypt(data)
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })  
   }
 
   return (

@@ -213,13 +213,6 @@ export default function SignUp() {
                             }
                             label="Show password"
                           />
-                          <div>
-                            <Link
-                              href="/sign-in"
-                              className="text-first">
-                              <a>Sign in instead</a>
-                            </Link>
-                          </div>
                         </div>
                         <div className="text-center">
                           <small className="text-black-50">By clicking the <strong>Create account</strong> button below you agree to our terms of service and privacy statement.</small>
@@ -237,6 +230,16 @@ export default function SignUp() {
                           </div>
                         </div>
                       </form>
+                      <div className="text-center text-black-50 mt-3">
+                        Don't have an account?{' '}
+                        <Link
+                          href="/sign-in"
+                          onClick={(e) => e.preventDefault()}
+                          className="text-first">
+                          <a>Sign in</a>
+                        </Link>
+                        {' '}instead
+                      </div>
                     </Grid>
                   </div>
                 </div>

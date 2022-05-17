@@ -1,8 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
+import axios from 'axios'
+import * as encryption from 'object-encrypt-decrypt'
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import validEmail from '@secretsofsume/valid-email';
+
 
 import { Grid, Button, TextField, FormControlLabel, Checkbox, CircularProgress } from '@material-ui/core';
 

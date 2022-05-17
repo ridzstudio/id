@@ -8,6 +8,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import MuiTheme from '../theme';
 import ScrollToTop from '../utils/ScrollToTop';
 import '../assets/base.scss';
+import axios from 'axios'
 
 // Icons
 

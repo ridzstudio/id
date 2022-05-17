@@ -45,8 +45,6 @@ const create = async (req, res) => {
         errorStatus = true
         error = { ...error, confirmPassword: 'Password confirmation is required' }
       } else if (data.confirmPassword !== data.password) {
-        console.log(data.confirmPassword)
-        console.log(data.password)
         errorStatus = true
         error = { ...error, confirmPassword: 'Password is not matching' }
       }
@@ -55,22 +53,32 @@ const create = async (req, res) => {
         res.setHeader("message", encryption.encrypt(error))
         res.status(417).end()
       } else {
-        const result = await excuteQuery({
-          query: 'INSERT INTO accounts (firstname, lastname, email, password, status) VALUES ((?), (?), (?), (?), 1)',
-          values: [data.firstName, data.lastName, data.email, data.password],
+        const checkExistingEmail = await excuteQuery({
+          query: 'SELECT * FROM accounts WHERE email = ?',
+          values: [data.email]
         })
 
-        console.log(result)
-
-        if (result.insertId) {
-          res.status(201).end()
+        if(checkExistingEmail.length > 0) {
+          errorStatus = true
+          error = { ...error, email: 'An account already exist with this email' }
+          res.setHeader("message", encryption.encrypt(error))
+          res.status(417).end()
         } else {
-          res.status(500).end()
+          const createAccount = await excuteQuery({
+            query: 'INSERT INTO accounts (firstname, lastname, email, password, status) VALUES ((?), (?), (?), (?), 1)',
+            values: [data.firstName, data.lastName, data.email, data.password],
+          })
+  
+          if (createAccount.insertId) {
+            res.status(201).end()
+          } else {
+            res.status(500).end()
+          }
         }
+
       }
 
     } catch (error) {
-      console.log(error)
       res.status(500).end()
     }
   } else {

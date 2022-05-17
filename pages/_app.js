@@ -28,7 +28,7 @@ import { MinimalLayout } from '../layout-blueprints';
 
 const store = configureStore();
 
-axios.defaults.baseURL = process.env.APIBASE;
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 function App({ Component, pageProps }) {
   const pageVariants = {

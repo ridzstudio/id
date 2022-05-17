@@ -23,7 +23,7 @@ export default function SignUp() {
   })
 
   const [formConfig, setFormConfig] = useState({
-    error: true,
+    error: false,
     loading: false
   })
 
@@ -75,13 +75,13 @@ export default function SignUp() {
   }
 
 
-  useEffect(() => {
-    if (data.firstName && data.lastName && data.email && validEmail(data.email) && data.password && data.password.length >= 6 && config.confirmPassword && config.confirmPassword == data.password) {
-      setFormConfig({ ...formConfig, error: false })
-    } else {
-      setFormConfig({ ...formConfig, error: true })
-    }
-  }, [data, config])
+  // useEffect(() => {
+  //   if (data.firstName && data.lastName && data.email && validEmail(data.email) && data.password && data.password.length >= 6 && config.confirmPassword && config.confirmPassword == data.password) {
+  //     setFormConfig({ ...formConfig, error: false })
+  //   } else {
+  //     setFormConfig({ ...formConfig, error: true })
+  //   }
+  // }, [data, config])
 
 
   const handleSubmit = (event) => {

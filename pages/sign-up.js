@@ -14,12 +14,12 @@ export default function SignUp() {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   })
 
   const [config, setConfig] = useState({
     showPassword: false,
-    confirmPassword: ''
   })
 
   const [formConfig, setFormConfig] = useState({
@@ -75,13 +75,13 @@ export default function SignUp() {
   }
 
 
-  // useEffect(() => {
-  //   if (data.firstName && data.lastName && data.email && validEmail(data.email) && data.password && data.password.length >= 6 && config.confirmPassword && config.confirmPassword == data.password) {
-  //     setFormConfig({ ...formConfig, error: false })
-  //   } else {
-  //     setFormConfig({ ...formConfig, error: true })
-  //   }
-  // }, [data, config])
+  useEffect(() => {
+    if (data.firstName && data.lastName && data.email && validEmail(data.email) && data.password && data.password.length >= 6 && data.confirmPassword && data.confirmPassword == data.password) {
+      setFormConfig({ ...formConfig, error: false })
+    } else {
+      setFormConfig({ ...formConfig, error: true })
+    }
+  }, [data, config])
 
 
   const handleSubmit = (event) => {
@@ -90,12 +90,18 @@ export default function SignUp() {
     axios.post('/account/create', {
       data: encryption.encrypt(data)
     })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })  
+      .then(function (response) {
+        console.log(response);
+        setFormConfig({ ...formConfig, loading: false })
+      })
+      .catch(function (err) {
+        if (err.response.status === 417) {
+          setError({ ...error, ...encryption.decrypt(err.response.headers.message) })
+        } else {
+          console.error(err)
+        }
+        setFormConfig({ ...formConfig, loading: false })
+      })
   }
 
   return (
@@ -186,9 +192,9 @@ export default function SignUp() {
                               label="Confirm"
                               type={config.showPassword ? "text" : "password"}
                               fullWidth
-                              value={config.confirmPassword}
+                              value={data.confirmPassword}
                               name="confirmPassword"
-                              onChange={handleConfig}
+                              onChange={handleData}
                               error={Boolean(error.confirmPassword)}
                               onBlur={handleValidation}
                               helperText={error.confirmPassword}

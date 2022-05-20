@@ -26,7 +26,7 @@ const find = async (req, res) => {
             path: '/',
             priority: 'medium'
           })) 
-          res.status(200).end()
+          res.status(202).end()
         }
       } else {
         res.status(404).end()

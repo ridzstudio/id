@@ -22,6 +22,12 @@ export default function SignIn() {
     remember: ''
   })
 
+  const [formConfig, setFormConfig] = useState({
+    error: false,
+    loading: false,
+    emailAvailable: false
+  })
+
   const [checked1, setChecked1] = useState(true);
 
   const handleChange1 = (event) => {

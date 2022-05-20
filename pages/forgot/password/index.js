@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Grid, InputAdornment, Button, TextField } from '@material-ui/core';
 
 import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
+import Image from "next/image";
 
 export default function Password() {
   return (
@@ -19,11 +20,19 @@ export default function Password() {
                   <div className="bg-composed-wrapper--content py-5">
                     <Grid item md={10} lg={8} xl={4} className="mx-auto">
                       <div className="text-center mb-5">
+                      <div className='mb-4'>
+                          <Image
+                            src='/logo.svg'
+                            alt='Ridz Studio'
+                            width={120}
+                            height={70}
+                          />
+                        </div>
                         <h1 className="display-4 mb-1 font-weight-bold">
                           Recover Password
                         </h1>
                         <p className="font-size-lg mb-0 text-black-50">
-                          Forgot your password? No worries, we're here to help!
+                         Enter your email account to get a verification code 
                         </p>
                       </div>
                       <div>

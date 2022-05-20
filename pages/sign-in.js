@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
   Grid,
@@ -19,20 +19,54 @@ export default function SignIn() {
   const [data, setData] = useState({
     email: '',
     password: '',
-    remember: ''
+    remember: false
+  })
+
+  const [config, setConfig] = useState({
+    showPassword: false,
   })
 
   const [formConfig, setFormConfig] = useState({
-    error: false,
+    error: true,
     loading: false,
-    emailAvailable: false
+    emailAvailable: false,
   })
 
-  const [checked1, setChecked1] = useState(true);
+  const [error, setError] = useState({
+    email: '',
+    password: ''
+  })
 
-  const handleChange1 = (event) => {
-    setChecked1(event.target.checked);
-  };
+  const handleData = (event) => {
+    if (event.target.name === "remember") {
+      setData({ ...data, remember: event.target.checked })
+    } else {
+      setData({ ...data, [event.target.name]: event.target.value });
+    }
+  }
+
+  const handleConfig = (event) => {
+    setConfig({ ...config, showPassword: event.target.checked })
+  }
+
+  const handleValidation = (event) => {
+    setError({ ...error, [event.target.name]: '' })
+    if (event.target.name === "email") {
+      if (!event.target.value) {
+        setError({ ...error, [event.target.name]: 'Please enter your email' })
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!formConfig.emailAvailable && data.email) {
+      setFormConfig({ ...formConfig, error: false })
+    } else if (formConfig.emailAvailable && data.password && data.password.length < 6) {
+      setFormConfig({ ...formConfig, error: false })
+    } else {
+      setFormConfig({ ...formConfig, error: true })
+    }
+  }, [data, config])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -68,10 +102,16 @@ export default function SignIn() {
                       <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                           <TextField
+                            label="Email address"
                             fullWidth
                             variant="outlined"
-                            id="textfield-email"
-                            label="Email address"
+                            type="email"
+                            value={data.email}
+                            name="email"
+                            onChange={handleData}
+                            onBlur={handleValidation}
+                            error={Boolean(error.email)}
+                            helperText={error.email}
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
@@ -81,29 +121,38 @@ export default function SignIn() {
                             }}
                           />
                         </div>
-                        <div className="mb-3">
-                          <TextField
-                            fullWidth
-                            variant="outlined"
-                            id="textfield-password"
-                            label="Password"
-                            type="password"
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <LockTwoToneIcon />
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        </div>
+                        {
+                          formConfig.emailAvailable ?
+                            <div className="mb-3">
+                              <TextField
+                                label="Password"
+                                type={config.showPassword ? "text" : "password"}
+                                value={data.password}
+                                name="password"
+                                onChange={handleData}
+                                onBlur={handleValidation}
+                                fullWidth
+                                variant="outlined"
+                                error={Boolean(error.password)}
+                                helperText={error.password}
+                                InputProps={{
+                                  startAdornment: (
+                                    <InputAdornment position="start">
+                                      <LockTwoToneIcon />
+                                    </InputAdornment>
+                                  )
+                                }}
+                              />
+                            </div>
+                            : null
+                        }
                         <div className="d-flex justify-content-between align-items-center font-size-md">
                           <FormControlLabel
                             control={
                               <Checkbox
-                                checked={checked1}
-                                onChange={handleChange1}
-                                value="checked1"
+                                checked={data.remember}
+                                onChange={handleData}
+                                name="remember"
                                 color="primary"
                               />
                             }
@@ -118,7 +167,7 @@ export default function SignIn() {
                           </div>
                         </div>
                         <div className="text-center py-4">
-                          <Button type="submit" className="btn-second font-weight-bold w-50 my-2">
+                          <Button type="submit" disabled={formConfig.error ? formConfig.error : formConfig.loading} className="btn-second font-weight-bold w-50 my-2">
                             Sign in
                           </Button>
                         </div>

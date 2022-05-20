@@ -84,7 +84,9 @@ export default function SignIn() {
         }
       })
       .then(function (response) {
-        setFormConfig({ ...formConfig, emailAvailable: true, loading: false })
+        if(response.status === 202) {
+          setFormConfig({ ...formConfig, emailAvailable: true, loading: false })
+        }
       })
       .catch(function (err) {
         if (err.response.status === 417) {

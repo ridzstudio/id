@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,6 +36,14 @@ export default function SignIn() {
                   <div className="bg-composed-wrapper--content py-5">
                     <Grid item md={10} lg={8} xl={4} className="mx-auto">
                       <div className="text-center pb-4 mb-4">
+                        <div className='mb-4'>
+                          <Image
+                            src='/logo.svg'
+                            alt='Ridz Studio'
+                            width={120}
+                            height={70}
+                          />
+                        </div>
                         <h1 className="display-4 mb-1 font-weight-bold">Sign in</h1>
                         <p className="font-size-lg mb-0 text-black-50">
                           Use your Ridz Studio ID

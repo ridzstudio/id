@@ -34,36 +34,11 @@ export default function SignIn() {
                 <div className="flex-grow-1 w-100 d-flex align-items-center">
                   <div className="bg-composed-wrapper--content py-5">
                     <Grid item md={10} lg={8} xl={4} className="mx-auto">
-                      <div className="text-center">
+                      <div className="text-center pb-4 mb-4">
                         <h1 className="display-4 mb-1 font-weight-bold">Sign in</h1>
                         <p className="font-size-lg mb-0 text-black-50">
                           Use your Ridz Studio ID
                         </p>
-                      </div>
-                      <div className="text-center py-4 rounded bg-secondary my-4">
-                        <Button
-                          className="m-2 btn-pill px-4 font-weight-bold btn-google"
-                          size="small">
-                          <span className="btn-wrapper--icon">
-                            <FontAwesomeIcon icon={['fab', 'google']} />
-                          </span>
-                          <span className="btn-wrapper--label">
-                            Login with Google
-                          </span>
-                        </Button>
-                        <Button
-                          className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
-                          size="small">
-                          <span className="btn-wrapper--icon">
-                            <FontAwesomeIcon icon={['fab', 'facebook']} />
-                          </span>
-                          <span className="btn-wrapper--label">
-                            Login with Facebook
-                          </span>
-                        </Button>
-                      </div>
-                      <div className="text-center text-black-50 mb-4">
-                        or sign in with credentials
                       </div>
                       <div>
                         <div className="mb-4">

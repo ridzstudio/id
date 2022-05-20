@@ -134,7 +134,7 @@ export default function SignUp() {
                         </p>
                       </div>
                       <form onSubmit={handleSubmit}>
-                        <Grid container spacing={6} className="mb-0">
+                        <Grid container spacing={3} className="mb-3">
                           <Grid item md={6}>
                             <TextField
                               label="First name"
@@ -160,20 +160,22 @@ export default function SignUp() {
                             />
                           </Grid>
                         </Grid>
-                        <div className="mb-3">
-                          <TextField
-                            label="Email address"
-                            fullWidth
-                            type="email"
-                            value={data.email}
-                            name="email"
-                            onChange={handleData}
-                            onBlur={handleValidation}
-                            error={Boolean(error.email)}
-                            helperText={error.email}
-                          />
-                        </div>
-                        <Grid container spacing={6} className="mb-2">
+                        <Grid container spacing={3} className="mb-3">
+                          <Grid item md={12}>
+                            <TextField
+                              label="Email address"
+                              fullWidth
+                              type="email"
+                              value={data.email}
+                              name="email"
+                              onChange={handleData}
+                              onBlur={handleValidation}
+                              error={Boolean(error.email)}
+                              helperText={error.email}
+                            />
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={3} className="mb-2">
                           <Grid item md={6}>
                             <TextField
                               label="Password"

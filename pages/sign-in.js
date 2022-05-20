@@ -34,6 +34,10 @@ export default function SignIn() {
     setChecked1(event.target.checked);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+  }
+
   return (
     <>
       <Head>
@@ -61,7 +65,7 @@ export default function SignIn() {
                           Use your Ridz Studio ID
                         </p>
                       </div>
-                      <div>
+                      <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                           <TextField
                             fullWidth
@@ -114,7 +118,7 @@ export default function SignIn() {
                           </div>
                         </div>
                         <div className="text-center py-4">
-                          <Button className="btn-second font-weight-bold w-50 my-2">
+                          <Button type="submit" className="btn-second font-weight-bold w-50 my-2">
                             Sign in
                           </Button>
                         </div>
@@ -126,7 +130,7 @@ export default function SignIn() {
                             <a>Sign up</a>
                           </Link>
                         </div>
-                      </div>
+                      </form>
                     </Grid>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -109,12 +110,11 @@ export default function SignIn() {
                         </div>
                         <div className="text-center text-black-50 mt-3">
                           Don't have an account?{' '}
-                          <a
-                            href="#/"
-                            onClick={(e) => e.preventDefault()}
+                          <Link
+                            href="/sign-up"
                             className="text-first">
-                            Sign up
-                          </a>
+                            <a>Sign up</a>
+                          </Link>
                         </div>
                       </div>
                     </Grid>

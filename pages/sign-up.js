@@ -107,7 +107,7 @@ export default function SignUp() {
   return (
     <>
       <Head>
-        <title>Sign up page template</title>
+        <title>Create your Ridz Studio ID</title>
       </Head>
       <main>
         <div className="app-wrapper bg-white min-vh-100">
@@ -236,7 +236,6 @@ export default function SignUp() {
                         Don't have an account?{' '}
                         <Link
                           href="/sign-in"
-                          onClick={(e) => e.preventDefault()}
                           className="text-first">
                           <a>Sign in</a>
                         </Link>

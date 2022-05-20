@@ -35,9 +35,9 @@ export default function SignIn() {
                   <div className="bg-composed-wrapper--content py-5">
                     <Grid item md={10} lg={8} xl={4} className="mx-auto">
                       <div className="text-center">
-                        <h1 className="display-4 mb-1 font-weight-bold">Login</h1>
+                        <h1 className="display-4 mb-1 font-weight-bold">Sign in</h1>
                         <p className="font-size-lg mb-0 text-black-50">
-                          Fill in the fields below to login to your account
+                          Use your Ridz Studio ID
                         </p>
                       </div>
                       <div className="text-center py-4 rounded bg-secondary my-4">

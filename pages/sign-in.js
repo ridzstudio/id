@@ -95,12 +95,11 @@ export default function SignIn() {
                             label="Remember me"
                           />
                           <div>
-                            <a
-                              href="#/"
-                              onClick={(e) => e.preventDefault()}
+                            <Link
+                              href="/forgot/password"
                               className="text-first">
-                              Recover password
-                            </a>
+                              <a>Recover password</a>
+                            </Link>
                           </div>
                         </div>
                         <div className="text-center py-4">

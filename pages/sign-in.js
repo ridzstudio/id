@@ -16,6 +16,12 @@ import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
 export default function SignIn() {
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    remember: ''
+  })
+
   const [checked1, setChecked1] = useState(true);
 
   const handleChange1 = (event) => {

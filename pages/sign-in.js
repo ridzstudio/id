@@ -1,7 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import axios from 'axios'
 import { useState, useEffect } from 'react';
+import validEmail from '@secretsofsume/valid-email';
+import * as encryption from 'object-encrypt-decrypt'
 
 import {
   Grid,
@@ -70,6 +73,28 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    setFormConfig({ ...formConfig, loading: true })
+    if(!formConfig.emailAvailable) {
+      if(!validEmail(data.email)) {
+        setData({...data, email: data.email+'@ridzstudio.com'})
+      }
+      axios.head('/account/find', {
+        headers: {
+          data: encryption.encrypt(data.email)
+        }
+      })
+      .then(function (response) {
+        setFormConfig({ ...formConfig, emailAvailable: true, loading: false })
+      })
+      .catch(function (err) {
+        if (err.response.status === 417) {
+          setError({ ...error, ...encryption.decrypt(err.response.headers.message) })
+        } else {
+          console.error(err)
+        }
+        setFormConfig({ ...formConfig, loading: false })
+      })
+    }
   }
 
   return (
@@ -105,7 +130,6 @@ export default function SignIn() {
                             label="Email address"
                             fullWidth
                             variant="outlined"
-                            type="email"
                             value={data.email}
                             name="email"
                             onChange={handleData}

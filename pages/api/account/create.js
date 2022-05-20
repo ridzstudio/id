@@ -68,7 +68,7 @@ const create = async (req, res) => {
             query: 'INSERT INTO accounts (firstname, lastname, email, password, status) VALUES ((?), (?), (?), (?), 1)',
             values: [data.firstName, data.lastName, data.email, data.password],
           })
-  
+          
           if (createAccount.insertId) {
             res.status(201).end()
           } else {

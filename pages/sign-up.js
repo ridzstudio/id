@@ -6,8 +6,11 @@ import Link from "next/link";
 import { useEffect, useState } from 'react';
 import validEmail from '@secretsofsume/valid-email';
 
+import { Grid, Button, TextField, FormControlLabel, Checkbox, CircularProgress, Snackbar, Slide } from '@material-ui/core';
 
-import { Grid, Button, TextField, FormControlLabel, Checkbox, CircularProgress } from '@material-ui/core';
+function TransitionUp(props) {
+  return <Slide {...props} direction="up" />;
+}
 
 export default function SignUp() {
   const [data, setData] = useState({
@@ -34,6 +37,14 @@ export default function SignUp() {
     password: '',
     confirmPassword: ''
   })
+
+  const [serverError, setServerError] = useState('')
+
+  const [notificationOpen, setNotificationOpen] = useState(false);
+
+  const handleNotificationClose = () => {
+    setNotificationOpen(false);
+  };
 
   const handleData = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -74,7 +85,6 @@ export default function SignUp() {
     }
   }
 
-
   useEffect(() => {
     if (data.firstName && data.lastName && data.email && validEmail(data.email) && data.password && data.password.length >= 6 && data.confirmPassword && data.confirmPassword == data.password) {
       setFormConfig({ ...formConfig, error: false })
@@ -82,7 +92,6 @@ export default function SignUp() {
       setFormConfig({ ...formConfig, error: true })
     }
   }, [data, config])
-
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -95,11 +104,17 @@ export default function SignUp() {
         setFormConfig({ ...formConfig, loading: false })
       })
       .catch(function (err) {
+        console.log(err.response)
         if (err.response.status === 417) {
           setError({ ...error, ...encryption.decrypt(err.response.headers.message) })
+        } else if (err.response.status === 405) {
+          setServerError('This HTTP Request Method is not allowed')
+          setNotificationOpen(true);
         } else {
-          console.error(err)
+          setServerError('Internal Server Error')
+          setNotificationOpen(true);
         }
+        setTimeout(() => setNotificationOpen(false), 3000);
         setFormConfig({ ...formConfig, loading: false })
       })
   }
@@ -249,6 +264,13 @@ export default function SignUp() {
           </div>
         </div>
       </main>
+      <Snackbar
+        open={notificationOpen}
+        className="toastr-danger"
+        onClose={handleNotificationClose}
+        TransitionComponent={TransitionUp}
+        message={serverError}
+      />
     </>
   )
 }

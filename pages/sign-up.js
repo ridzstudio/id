@@ -46,7 +46,7 @@ export default function SignUp() {
 
   const [serverError, setServerError] = useState('')
 
-  const [successModal, setSuccessModal] = useState(true)
+  const [successModal, setSuccessModal] = useState(false)
 
   const [notificationOpen, setNotificationOpen] = useState(false);
 

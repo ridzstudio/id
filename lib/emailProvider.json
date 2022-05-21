@@ -1,0 +1,22 @@
+{
+  "gmail.com": {
+    "name": "Gmail",
+    "url":  "https://mail.google.com"
+  },
+  "yahoo.com": {
+    "name": "Yahoo Mail",
+    "url":  "https://mail.yahoo.com"
+  },
+  "ridzstudio.com": {
+    "name": "Ridz Studio Mail",
+    "url":  "https://mail.ridzstudio.com"
+  },
+  "outlook.com": {
+    "name": "Outlook",
+    "url":  "https://outlook.live.com"
+  },
+  "icloud.com": {
+    "name": "Apple Mail",
+    "url":  "https://www.icloud.com/mail"
+  }
+}

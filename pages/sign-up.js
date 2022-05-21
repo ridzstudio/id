@@ -1,18 +1,24 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import * as encryption from 'object-encrypt-decrypt'
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import validEmail from '@secretsofsume/valid-email';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import extractDomain from "extract-email-domain";
 
-import { Grid, Button, TextField, FormControlLabel, Checkbox, CircularProgress, Snackbar, Slide } from '@material-ui/core';
+import { Grid, Button, TextField, FormControlLabel, Checkbox, CircularProgress, Snackbar, Slide, Dialog } from '@material-ui/core';
+
+import emailProvider from '../lib/emailProvider.json'
 
 function TransitionUp(props) {
   return <Slide {...props} direction="up" />;
 }
 
 export default function SignUp() {
+  const router = useRouter();
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
@@ -39,6 +45,8 @@ export default function SignUp() {
   })
 
   const [serverError, setServerError] = useState('')
+
+  const [successModal, setSuccessModal] = useState(true)
 
   const [notificationOpen, setNotificationOpen] = useState(false);
 
@@ -91,6 +99,9 @@ export default function SignUp() {
     } else {
       setFormConfig({ ...formConfig, error: true })
     }
+
+    console.log(extractDomain(data.email))
+    console.log()
   }, [data, config])
 
   const handleSubmit = (event) => {
@@ -101,6 +112,7 @@ export default function SignUp() {
     })
       .then(function (response) {
         setFormConfig({ ...formConfig, loading: false })
+        setSuccessModal(true)
       })
       .catch(function (err) {
         if (err.response.status === 417) {
@@ -262,6 +274,41 @@ export default function SignUp() {
           </div>
         </div>
       </main>
+      <Dialog
+        open={successModal}
+        onClose={() => setSuccessModal(false)}
+        classes={{ paper: 'modal-content rounded-lg' }}>
+        <div className="text-center p-5">
+          <div className="avatar-icon-wrapper rounded-circle m-0">
+            <div className="d-inline-flex justify-content-center p-0 rounded-circle btn-icon avatar-icon-wrapper bg-neutral-success text-success m-0 d-130">
+              <FontAwesomeIcon
+                icon={['fa', 'circle-check']}
+                className="d-flex align-self-center display-3"
+              />
+            </div>
+          </div>
+          <h4 className="font-weight-bold mt-4 mb-3">
+            Congratulation!
+          </h4>
+          <p className="mb-0 font-size-lg text-muted">
+            Dear {data.firstName + ' ' + data.lastName}, your Ridz Studio ID has been created successfully. <span className="text-black-50">A verification code has been sent to your email - (<strong>{data.email}</strong>). Please verify your account</span> to start using your Ridz Studio ID.
+          </p>
+          <div className="pt-4">
+            {
+              emailProvider[extractDomain(data.email)] ?
+                <Button
+                  onClick={() => window.open(emailProvider[extractDomain(data.email)].url, "_blank")}
+                  className="btn-neutral-dark btn-pill mx-1">
+                  <span className="btn-wrapper--label">Go to {emailProvider[extractDomain(data.email)].name}</span>
+                </Button>
+                :  null
+              }
+            <Button onClick={() => router.push('/account/verify')} className="btn-success btn-pill mx-1">
+              <span className="btn-wrapper--label">Verify Account</span>
+            </Button>
+          </div>
+        </div>
+      </Dialog>
       <Snackbar
         open={notificationOpen}
         className="toastr-danger"

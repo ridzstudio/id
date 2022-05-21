@@ -32,7 +32,7 @@ export default function SignIn() {
   const [formConfig, setFormConfig] = useState({
     error: true,
     loading: false,
-    emailAvailable: false,
+    emailAvailable: false
   })
 
   const [error, setError] = useState({
@@ -71,31 +71,48 @@ export default function SignIn() {
     }
   }, [data, config])
 
+  const changeEmail = (event) => {
+    event.preventDefault()
+    setData({
+      email: '',
+      password: ''
+    })
+    setFormConfig({
+      error: true,
+      loading: false,
+      emailAvailable: false
+    })
+    setError({
+      email: '',
+      password: ''
+    })
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     setFormConfig({ ...formConfig, loading: true })
-    if(!formConfig.emailAvailable) {
-      if(!validEmail(data.email)) {
-        setData({...data, email: data.email+'@ridzstudio.com'})
+    if (!formConfig.emailAvailable) {
+      if (!validEmail(data.email)) {
+        setData({ ...data, email: data.email + '@ridzstudio.com' })
       }
       axios.head('/account/find', {
         headers: {
           data: encryption.encrypt(data.email)
         }
       })
-      .then(function (response) {
-        if(response.status === 202) {
-          setFormConfig({ ...formConfig, emailAvailable: true, loading: false })
-        }
-      })
-      .catch(function (err) {
-        if (err.response.status === 417) {
-          setError({ ...error, ...encryption.decrypt(err.response.headers.message) })
-        } else {
-          console.error(err)
-        }
-        setFormConfig({ ...formConfig, loading: false })
-      })
+        .then(function (response) {
+          if (response.status === 202) {
+            setFormConfig({ ...formConfig, emailAvailable: true, loading: false })
+          }
+        })
+        .catch(function (err) {
+          if (err.response.status === 404) {
+            setError({ ...error, email: 'No account found with this email' })
+          } else {
+            console.error(err)
+          }
+          setFormConfig({ ...formConfig, loading: false })
+        })
     }
   }
 
@@ -138,12 +155,18 @@ export default function SignIn() {
                             onBlur={handleValidation}
                             error={Boolean(error.email)}
                             helperText={error.email}
+                            disabled={formConfig.emailAvailable ? true : false}
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
                                   <MailOutlineTwoToneIcon />
                                 </InputAdornment>
-                              )
+                              ),
+                              endAdornment: formConfig.emailAvailable ?
+                                <InputAdornment position='end'>
+                                  <Link href=""><a onClick={changeEmail}>Change</a></Link>
+                                </InputAdornment>
+                                : null
                             }}
                           />
                         </div>

@@ -92,12 +92,15 @@ export default function SignIn() {
     event.preventDefault()
     setFormConfig({ ...formConfig, loading: true })
     if (!formConfig.emailAvailable) {
+      let email = data.email
       if (!validEmail(data.email)) {
+        email = data.email + '@ridzstudio.com'
         setData({ ...data, email: data.email + '@ridzstudio.com' })
       }
+      console.log(email)
       axios.head('/account/find', {
         headers: {
-          data: encryption.encrypt(data.email)
+          data: encryption.encrypt(email)
         }
       })
         .then(function (response) {

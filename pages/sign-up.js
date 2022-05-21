@@ -100,11 +100,9 @@ export default function SignUp() {
       data: encryption.encrypt(data)
     })
       .then(function (response) {
-        console.log(response);
         setFormConfig({ ...formConfig, loading: false })
       })
       .catch(function (err) {
-        console.log(err.response)
         if (err.response.status === 417) {
           setError({ ...error, ...encryption.decrypt(err.response.headers.message) })
         } else if (err.response.status === 405) {
